@@ -1,0 +1,24 @@
+# Hotwire 2049: cheat menu unlocker for San Francisco Rush 2049: Recompiled.
+#
+# Build the ELF with `make`, then run `RecompModTool mod.toml build` and copy build/*.nrm into the game's mods
+# folder. See README.md.
+
+[manifest]
+id = "hotwire_2049"
+version = "1.0.0"
+display_name = "Hotwire 2049"
+description = "Unlocks everything in the in-game cheat menu"
+short_description = "Unlocks the in-game cheats."
+authors = [ "Deozaan" ]
+game_id = "rush2049"
+minimum_recomp_version = "0.0.1"
+dependencies = []
+optional_dependencies = []
+native_libraries = []
+
+[inputs]
+elf_path = "build/mod.elf"
+mod_filename = "hotwire_2049"
+func_reference_syms_file = "syms/rush2049.us.syms.toml"
+data_reference_syms_files = [ "syms/rush2049.us.datasyms.toml" ]
+additional_files = [ "thumb.png" ]

@@ -1,0 +1,14 @@
+# Game functions this mod hooks, by name (`RECOMP_HOOK("sched_on_retrace")`). RecompModTool resolves the names
+# here to Game addresses. This is a trimmed copy of the game's generated syms
+# (rush-2049-recomp/syms/rush2049.us.syms.toml): add a function here (with its section, vram, rom and size) to
+# hook it. Addresses are fixed for this ROM, so every section is absolute.
+
+[[section]]
+name = "boot"
+rom = 0x00001000
+vram = 0x80000400
+size = 0x279D0
+
+functions = [
+    { name = "sched_on_retrace", vram = 0x80000880, size = 0xD0 },
+]

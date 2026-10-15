@@ -1,0 +1,22 @@
+# Game variables this mod reads or writes by name (`extern u16 cheat_state[11];`). RecompModTool resolves the
+# names here to game addresses. This is a trimmed copy of the game's datasyms
+# (rush-2049-recomp/syms/rush2049.us.datasyms.toml) plus the symbols this mod adds. Addresses are fixed for this
+# ROM, so every section is absolute.
+
+# The menu/cheat state lives in the game's main data section.
+[[section]]
+name = "main_data"
+vram = 0x8010FD80
+size = 0x6A8C0
+
+symbols = [
+    # u16[11]: per-cheat flags at 0x8011648C (`0x0101` is what the "Unlock All Cheats" GameShark code
+    # 8111648C 0101 + repeater 50000B02 writes).
+    { name = "cheat_state", vram = 0x8011648C },
+    # signed char[23]: per-cheat "active" flags (referenced by startscr.c, options.c, cheatscr.c).
+    { name = "gCheatActive", vram = 0x8011C878 },
+    # signed short[23]: per-cheat state (referenced by game.c, options.c, cheatscr.c, carscr.c).
+    { name = "gCheatState", vram = 0x8011C890 },
+    # signed char[10]: which start-menu items are shown. Index 6 is kStartMenuCheat (hidden until unlocked).
+    { name = "start_valid_option", vram = 0x8012A780 },
+]

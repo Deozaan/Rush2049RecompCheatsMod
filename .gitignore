@@ -1,0 +1,68 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Other
+*.tmp
+*.log
+*.bak
+*.orig
+*.cache
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# IDE / misc
+*.swp
+*~
+.idea/
+
+# Vendored MIPS toolchain, downloaded tools and their archives (see tools/README.md).
+# Only tools/README.md is tracked.
+tools/msys64/
+tools/bin/
+tools/msys2-base.sfx.exe
+tools/msys2-base.tar.zst
+
+# RecompModTool downloaded by the GitHub workflow / local Linux builds.
+/RecompModTool

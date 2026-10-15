@@ -1,0 +1,63 @@
+name: Build and Release
+
+# Tag a commit like `v1.0.0` to build the .nrm and publish it as a GitHub Release.
+# Run manually (Actions tab) to build and download the .nrm as a workflow artifact without releasing.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang lld make
+
+      - name: Verify clang has a MIPS backend
+        run: |
+          clang --print-targets | grep -qi mips || {
+            echo "::error::clang has no MIPS target; the mod cannot be built with this toolchain."
+            clang --print-targets
+            exit 1
+          }
+
+      - name: Build mod ELF
+        run: make MIPS_CC=clang MIPS_LD=ld.lld
+
+      - name: Download RecompModTool
+        run: |
+          curl -fsSL -o RecompModTool \
+            https://github.com/N64Recomp/N64Recomp/releases/download/mod-tool-release/RecompModTool
+          chmod +x RecompModTool
+
+      - name: Package mod (.nrm)
+        run: ./RecompModTool mod.toml build
+
+      - name: List output
+        run: ls -la build
+
+      - name: Upload .nrm artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hotwire_2049
+          path: build/*.nrm
+          if-no-files-found: error
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" build/*.nrm \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes

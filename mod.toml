@@ -5,7 +5,7 @@
 
 [manifest]
 id = "hotwire_2049"
-version = "1.0.0"
+version = "1.1.0"
 display_name = "Hotwire 2049"
 description = "Unlocks everything in the in-game cheat menu"
 short_description = "Unlocks the in-game cheats."

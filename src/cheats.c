@@ -13,9 +13,14 @@ static void apply_cheat_state(void) {
     }
 }
 
-// Re-applied every frame: the game rebuilds its menu/cheat state during screen
-// init, so a one-shot write is not enough.
+// TEST BUILD: writes on the first retrace only, instead of every frame, to see whether the game
+// ever clears cheat_state again after boot. The flag lives in this mod's BSS, which the runtime
+// zeroes when it loads the mod, so it starts at 0.
 RECOMP_HOOK("sched_on_retrace")
 void cheat_menu_on_retrace(void) {
-    apply_cheat_state();
+    static u32 written = 0;
+    if (!written) {
+        written = 1;
+        apply_cheat_state();
+    }
 }
